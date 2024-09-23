@@ -30,7 +30,12 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        //
+        Company::create($request->only(['name', 'location', 'description']));
+        return redirect()->route('admin.companies.index')
+            ->with('toast', [
+                'message' => 'Company created successfully!',
+                'type' => 'success',
+            ]);
     }
 
     /**
