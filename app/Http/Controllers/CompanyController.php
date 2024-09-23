@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyCompanyRequest;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use Request;
 
 class CompanyController extends Controller
 {
@@ -15,14 +17,6 @@ class CompanyController extends Controller
     {
         $companies = Company::orderBy('id', 'desc')->paginate(10);
         return view('companies.admin-index', compact('companies'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,15 +37,12 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Company $company)
-    {
-        //
+        $company->load([
+            'jobPosts' => function ($query) {
+                $query->orderBy('id', 'desc');
+            }
+        ]);
+        return view('companies.admin-show', compact('company'));
     }
 
     /**
@@ -59,7 +50,12 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        //
+        $company->update($request->only(['name', 'location', 'description']));
+        return redirect()->route('admin.companies.show', ['company' => $company->id])
+            ->with('toast', [
+                'message' => 'Company updated successfully!',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -67,6 +63,19 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        if (!auth()->user()->is_admin) {
+            return redirect()->route('admin.companies.index')
+                ->with('toast', [
+                    'message' => 'You are not authorized to delete a company!',
+                    'type' => 'danger',
+                ]);
+        }
+
+        $company->delete();
+        return redirect()->route('admin.companies.index')
+            ->with('toast', [
+                'message' => 'Company deleted successfully!',
+                'type' => 'success',
+            ]);
     }
 }
