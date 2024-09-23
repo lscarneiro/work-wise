@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Str;
 
 class JobPost extends Model
 {
@@ -27,4 +28,9 @@ class JobPost extends Model
         'salary' => 'decimal:2',
         'is_published' => 'boolean',
     ];
+
+    public function getTruncatedDescriptionAttribute()
+    {
+        return Str::limit($this->description, 100, '...');
+    }
 }
