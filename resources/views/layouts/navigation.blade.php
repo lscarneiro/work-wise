@@ -86,6 +86,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.index')">
+                    {{ __('Manage Companies') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.job-posts.index')" :active="request()->routeIs('admin.job-posts.index')">
+                    {{ __('Manage Job Postings') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
