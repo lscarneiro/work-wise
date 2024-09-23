@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
+use App\Models\JobPost;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Hash;
@@ -32,5 +34,15 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             User::factory()->create($user);
         }
+
+        Company::factory()
+            ->count(15)
+            ->create()->each(function ($company) {
+                $company->jobPosts()->saveMany(
+                    JobPost::factory()->count(rand(0, 10))->make()
+                );
+            });
+        ;
+
     }
 }
