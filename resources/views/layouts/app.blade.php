@@ -34,6 +34,11 @@
         <main>
             {{ $slot }}
         </main>
+
+        <!-- Toast Notification -->
+        @if (session('toast'))
+            <x-toast :message="session('toast.message')" :type="session('toast.type')" />
+        @endif
     </div>
 </body>
 
