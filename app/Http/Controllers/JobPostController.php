@@ -104,4 +104,13 @@ class JobPostController extends Controller
                 'type' => 'success',
             ]);
     }
+
+    /**
+     * Display the job posting details to the public.
+     */
+    public function details(JobPost $jobPost)
+    {
+        $positionTypes = JobPost::POSITION_TYPES;
+        return view('job-posts.details', compact('jobPost', 'positionTypes'));
+    }
 }

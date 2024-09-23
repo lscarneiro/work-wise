@@ -50,6 +50,11 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link @click="darkMode = !darkMode" :href="'javascript:void(0)'">
+                            <span x-show="darkMode">{{ __('Try Light mode') }}</span>
+                            <span x-show="!darkMode">{{ __('Try Dark mode') }}</span>
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -106,6 +111,11 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link @click="darkMode = !darkMode" :href="'javascript:void(0)'">
+                    <span x-show="darkMode">{{ __('Try Light mode') }}</span>
+                    <span x-show="!darkMode">{{ __('Try Dark mode') }}</span>
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('/job/{job_post}', [JobPostController::class, 'details'])->name('job-posts.details');
 });
 
 Route::prefix('admin')->middleware(['auth', EnsureAdmin::class])->name('admin.')->group(function () {
