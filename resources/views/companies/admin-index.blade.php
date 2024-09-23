@@ -8,9 +8,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-company')">
-                {{ __('Create Company') }}
-            </x-primary-button>
+            <div class="flex justify-center sm:justify-end">
+                <x-primary-button x-on:click.prevent="$dispatch('open-modal', 'create-company')">
+                    {{ __('Create Company') }}
+                </x-primary-button>
+            </div>
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="p-6">
@@ -22,7 +24,7 @@
                                     {{ __('Id') }}
                                 </th>
                                 <th scope="col"
-                                    class="px-1 sm:px-6 py-3 text-left text-xs max-sm:max-w-24 font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider">
+                                    class="px-1 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider">
                                     {{ __('Name') }}
                                 </th>
                                 <th scope="col"
@@ -51,7 +53,7 @@
                                             href="{{ route('admin.companies.show', $company->id) }}">{{ $company->id }}</a>
                                     </td>
                                     <td
-                                        class="px-1 sm:px-6 py-4 whitespace-nowrap max-sm:max-w-24 max-sm:overflow-hidden">
+                                        class="px-1 sm:px-6 py-4 whitespace-nowrap max-sm:max-w-24 truncate overflow-hidden">
                                         {{ $company->name }}</td>
                                     <td class="px-1 sm:px-6 py-4 whitespace-nowrap max-sm:hidden">
                                         {{ $company->location }}</td>
