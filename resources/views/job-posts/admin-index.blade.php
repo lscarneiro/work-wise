@@ -66,7 +66,7 @@
                                         {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
                                     <td class="px-1 sm:px-6 py-4 text-center whitespace-nowrap">
                                         <a class="hover:text-indigo-900"
-                                            href="{{ route('admin.job-posts.show', $jobPost->id) }}">{{ __('View') }}</a>
+                                            href="{{ route('admin.job-posts.show', $jobPost->id) }}">{{ __('View / Edit') }}</a>
                                     </td>
                                 </tr>
                             @endforeach

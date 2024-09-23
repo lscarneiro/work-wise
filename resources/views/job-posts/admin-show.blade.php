@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="mt-6 flex justify-end gap-4">
+            <div class="mt-6 flex justify-center sm:justify-end gap-2 sm:gap-4">
                 @if ($jobPost->is_published)
                     <x-secondary-button
                         x-on:click.prevent="$dispatch('open-modal', 'unpublish-job-post-{{ $jobPost->id }}')">
@@ -56,7 +56,7 @@
 
 
             <!-- Delete Job Posting Button -->
-            <div class="mt-6 flex justify-end">
+            <div class="mt-6 flex justify-center sm:justify-end gap-2 sm:gap-4">
                 <x-danger-button x-on:click.prevent="$dispatch('open-modal', 'confirm-delete-{{ $jobPost->id }}')"
                     class="ms-3">{{ __('Delete Job Posting') }}</x-danger-button>
             </div>

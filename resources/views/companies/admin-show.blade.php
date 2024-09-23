@@ -8,7 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Edit Company Button -->
-            <div class="mt-6 flex justify-end">
+            
+            <div class="mt-6 flex justify-center sm:justify-end">
                 <x-primary-button x-on:click.prevent="$dispatch('open-modal', 'edit-company-{{ $company->id }}')">
                     {{ __('Edit Company') }}
                 </x-primary-button>
@@ -41,19 +42,19 @@
                                         {{ __('Job Title') }}
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider max-sm:hidden">
                                         {{ __('Location') }}
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider max-sm:hidden">
                                         {{ __('Salary') }}
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider max-sm:hidden">
                                         {{ __('Published') }}
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider max-sm:hidden">
                                         {{ __('Created On') }}
                                     </th>
                                     <th
@@ -65,14 +66,14 @@
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:text-gray-400">
                                 @foreach ($company->jobPosts as $jobPost)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $jobPost->title }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $jobPost->location }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap truncate max-sm:max-w-48">{{ $jobPost->title }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap truncate max-sm:hidden">{{ $jobPost->location }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap max-sm:hidden">
                                             {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
                                         <td
-                                            class="px-6 py-4 whitespace-nowrap font-bold {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">
+                                            class="px-6 py-4 whitespace-nowrap font-bold max-sm:hidden {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">
                                             {{ $jobPost->is_published ? 'YES' : 'NO' }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap max-sm:hidden">
                                             {{ $jobPost->created_at->format('F j, Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('admin.job-posts.show', $jobPost) }}"
@@ -96,7 +97,7 @@
             </div>
 
             <!-- Delete Company Button -->
-            <div class="mt-6 flex justify-end">
+            <div class="mt-6 flex justify-center sm:justify-end gap-2 sm:gap-4">
                 <x-danger-button x-on:click.prevent="$dispatch('open-modal', 'confirm-delete-{{ $company->id }}')"
                     class="ms-3">{{ __('Delete Company') }}</x-danger-button>
             </div>

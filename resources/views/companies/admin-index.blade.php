@@ -63,7 +63,7 @@
                                         {{ $company->job_posts_count }}</td>
                                     <td class="px-1 sm:px-6 py-4 text-center whitespace-nowrap">
                                         <a
-                                            href="{{ route('admin.companies.show', $company->id) }}">{{ __('View') }}</a>
+                                            href="{{ route('admin.companies.show', $company->id) }}">{{ __('View / Edit') }}</a>
                                     </td>
                                 </tr>
                             @endforeach
