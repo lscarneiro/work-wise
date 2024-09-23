@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureAdmin;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,10 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware(['auth', EnsureAdmin::class])->name('admin.')->group(function () {
     Route::resource('companies', CompanyController::class)->except(['create', 'edit']);
+
+    Route::patch('job-posts/{job_post}/publish', [JobPostController::class, 'publish'])->name('job-posts.publish');
+    Route::patch('job-posts/{job_post}/unpublish', [JobPostController::class, 'unpublish'])->name('job-posts.unpublish');
+    Route::resource('job-posts', JobPostController::class)->except(['create', 'edit']);
 });
 
 require __DIR__ . '/auth.php';

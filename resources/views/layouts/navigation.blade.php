@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.index')">
                             {{ __('Manage Companies') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.job-posts.index')" :active="request()->routeIs('admin.job-posts.index')">
+                            {{ __('Manage Job Postings') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
+use App\Models\Company;
 use App\Models\JobPost;
 
 class JobPostController extends Controller
@@ -13,15 +14,12 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $jobPosts = JobPost::orderBy('id', 'desc')->paginate(10);
+        $positionTypes = JobPost::POSITION_TYPES;
+        $companies = Company::orderBy('id', 'desc')->pluck('name', 'id')->map(function ($name, $id) {
+            return "{$name} (ID: {$id})";
+        });
+        return view('job-posts.admin-index', compact('jobPosts', 'positionTypes', 'companies'));
     }
 
     /**
@@ -29,7 +27,12 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
-        //
+        JobPost::create($request->only(['company_id', 'title', 'location', 'position_type', 'salary', 'description']));
+        return redirect()->route('admin.job-posts.index')
+            ->with('toast', [
+                'message' => 'Job Posting created successfully!',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -37,15 +40,9 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(JobPost $jobPost)
-    {
-        //
+        $jobPost->load(relations: ['company']);
+        $positionTypes = JobPost::POSITION_TYPES;
+        return view('job-posts.admin-show', compact('jobPost', 'positionTypes'));
     }
 
     /**
@@ -53,7 +50,12 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        //
+        $jobPost->update($request->only(['title', 'location', 'description', 'salary', 'position_type', 'is_published']));
+        return redirect()->route('admin.job-posts.show', ['job_post' => $jobPost->id])
+            ->with('toast', [
+                'message' => 'Job Posting updated successfully!',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -61,6 +63,45 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
-        //
+        if (!auth()->user()->is_admin) {
+            return redirect()->route('admin.job-posts.index')
+                ->with('toast', [
+                    'message' => 'You are not authorized to delete this job posting!',
+                    'type' => 'danger',
+                ]);
+        }
+
+        $jobPost->delete();
+        return redirect()->route('admin.job-posts.index')
+            ->with('toast', [
+                'message' => 'Job Posting deleted successfully!',
+                'type' => 'success',
+            ]);
+    }
+
+    /**
+     * Make the job posting visible to the public.
+     */
+    public function publish(JobPost $jobPost)
+    {
+        $jobPost->update(['is_published' => true]);
+        return redirect()->route('admin.job-posts.show', ['job_post' => $jobPost->id])
+            ->with('toast', [
+                'message' => 'Job post published successfully!',
+                'type' => 'success',
+            ]);
+    }
+
+    /**
+     * Make the job posting invisible to the public.
+     */
+    public function unpublish(JobPost $jobPost)
+    {
+        $jobPost->update(['is_published' => false]);
+        return redirect()->route('admin.job-posts.show', ['job_post' => $jobPost->id])
+            ->with('toast', [
+                'message' => 'Job post unpublished successfully!',
+                'type' => 'success',
+            ]);
     }
 }
