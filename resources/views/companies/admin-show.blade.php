@@ -30,7 +30,8 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('Job Posts') }}</h3>
                 <div class="mt-4">
                     @if ($company->jobPosts->isEmpty())
-                        <p class="text-gray-900 dark:text-gray-100">{{ __('No job postings available for this company.') }}</p>
+                        <p class="text-gray-900 dark:text-gray-100">
+                            {{ __('No job postings available for this company.') }}</p>
                     @else
                         <table class="w-full divide-y divide-gray-200 mt-4">
                             <thead class="bg-gray-50 dark:bg-gray-700">
@@ -55,7 +56,10 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                         {{ __('Created On') }}
                                     </th>
-                    
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        {{ __('Actions') }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:text-gray-400">
@@ -63,13 +67,19 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $jobPost->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $jobPost->location }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
                                         <td
                                             class="px-6 py-4 whitespace-nowrap font-bold {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">
                                             {{ $jobPost->is_published ? 'YES' : 'NO' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ $jobPost->created_at->format('F j, Y') }}</td>
-                                       
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('admin.job-posts.show', $jobPost) }}"
+                                                class="hover:text-indigo-900">
+                                                {{ __('View / Edit') }}
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
