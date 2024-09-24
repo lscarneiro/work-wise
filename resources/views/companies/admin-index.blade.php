@@ -45,7 +45,8 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:text-gray-400 dark:bg-gray-800">
+                        <tbody
+                            class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:text-gray-400 dark:bg-gray-800">
                             @foreach ($companies as $company)
                                 <tr>
                                     <td class="px-1 sm:px-6 py-4 whitespace-nowrap">
@@ -90,21 +91,23 @@
             <div class="mt-6">
                 <x-input-label for="name" value="{{ __('Name') }}" />
                 <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                    placeholder="{{ __('Name') }}" :value="old('name')" />
+                    placeholder="{{ __('e.g. Wise Publishing, Inc.') }}" :value="old('name')" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div class="mt-6">
                 <x-input-label for="location" value="{{ __('Location') }}" />
                 <x-text-input id="location" name="location" type="text" class="mt-1 block w-full"
-                    placeholder="{{ __('Location') }}" :value="old('location')" />
+                    placeholder="{{ __('e.g. Toronto, Ontario, Canada') }}" :value="old('location')" />
                 <x-input-error :messages="$errors->get('location')" class="mt-2" />
             </div>
 
             <div class="mt-6">
                 <x-input-label for="description" value="{{ __('Description') }}" />
-                <x-text-input id="description" name="description" type="text" class="mt-1 block w-full"
-                    placeholder="{{ __('Description') }}" :value="old('description')" />
+                <x-textarea-input id="description" name="description" rows="5"
+                    placeholder="{{ __('Enter company profile...') }}" class="mt-1 block w-full">
+                    {{ old('description') }}
+                </x-textarea-input>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 

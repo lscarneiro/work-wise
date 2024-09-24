@@ -114,22 +114,25 @@
             <div class="mt-6">
                 <x-input-label for="name" value="{{ __('Name') }}" />
                 <x-text-input id="name" name="name" type="text" :value="old('name', $company->name)"
-                    class="mt-1 block w-full" />
+                    placeholder="{{ __('e.g. Wise Publishing, Inc.') }}" class="mt-1 block w-full" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div class="mt-6">
                 <x-input-label for="location" value="{{ __('Location') }}" />
                 <x-text-input id="location" name="location" type="text" :value="old('location', $company->location)"
-                    class="mt-1 block w-full" />
+                    placeholder="{{ __('e.g. Toronto, Ontario, Canada') }}" class="mt-1 block w-full" />
                 <x-input-error :messages="$errors->get('location')" class="mt-2" />
             </div>
 
             <div class="mt-6">
                 <x-input-label for="description" value="{{ __('Description') }}" />
-                <x-text-input id="description" name="description" type="text" :value="old('description', $company->description)"
-                    class="mt-1 block w-full" />
+                <x-textarea-input id="description" name="description" rows="5"
+                    placeholder="{{ __('Enter company profile...') }}" class="mt-1 block w-full">
+                    {{ old('description', $jobPost->description) }}
+                </x-textarea-input>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    
             </div>
 
             <div class="mt-6 flex justify-end">
