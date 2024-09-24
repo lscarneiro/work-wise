@@ -16,7 +16,7 @@
             </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="p-6">
-                    <table class="w-full divide-y divide-gray-200">
+                    <table class="w-full divide-y divide-gray-200 dark:divide-gray-500">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th scope="col"
@@ -45,7 +45,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:text-gray-400 dark:bg-gray-800">
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:text-gray-400 dark:bg-gray-800">
                             @foreach ($jobPosts as $jobPost)
                                 <tr>
                                     <td class="px-1 sm:px-6 py-4 whitespace-nowrap">

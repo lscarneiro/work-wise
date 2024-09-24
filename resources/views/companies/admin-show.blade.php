@@ -33,7 +33,7 @@
                         <p class="text-gray-900 dark:text-gray-100">
                             {{ __('No job postings available for this company.') }}</p>
                     @else
-                        <table class="w-full divide-y divide-gray-200 mt-4">
+                        <table class="w-full divide-y divide-gray-200 dark:divide-gray-500 mt-4">
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
                                     <th
@@ -62,7 +62,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:text-gray-400">
+                            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-800 dark:text-gray-400">
                                 @foreach ($company->jobPosts as $jobPost)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap truncate max-sm:max-w-24">{{ $jobPost->title }}</td>
