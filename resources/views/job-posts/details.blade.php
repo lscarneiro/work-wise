@@ -21,7 +21,7 @@
                     </p>
                     <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ $jobPost->location }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Salary:') }}</strong>
-                        {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</p>
+                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong>
                         {{ $jobPost->description }}</p>
                 </div>

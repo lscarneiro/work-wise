@@ -68,7 +68,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap truncate max-sm:max-w-24">{{ $jobPost->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap truncate max-w-32 max-sm:hidden">{{ $jobPost->location }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap max-sm:hidden">
-                                            {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
+                                            {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</td>
                                         <td
                                             class="px-6 py-4 whitespace-nowrap font-bold max-sm:hidden {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">
                                             {{ $jobPost->is_published ? 'YES' : 'NO' }}</td>

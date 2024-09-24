@@ -45,7 +45,7 @@
                     </p>
                     <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ $jobPost->location }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Salary:') }}</strong>
-                        {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</p>
+                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Published:') }}</strong> <span
                             class="font-bold {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">{{ $jobPost->is_published ? 'YES' : 'NO' }}</span>
                     </p>
