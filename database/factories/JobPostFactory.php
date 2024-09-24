@@ -19,7 +19,7 @@ class JobPostFactory extends Factory
         return [
             "title" => $this->faker->jobTitle,
             "position_type" => $this->faker->randomElement(['remote', 'hybrid', 'in-person']),
-            "salary" => $this->faker->randomFloat(2, 0000, 300000),
+            "salary" => $this->faker->randomFloat(2, 1000, 300000),
             "location" => $this->faker->city . ', ' . $this->faker->stateAbbr . ', ' . $this->faker->country,
             "description" => $this->faker->sentences(20, true),
             "is_published" => $this->faker->boolean(70),
