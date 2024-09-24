@@ -6,6 +6,7 @@ use App\Http\Requests\DestroyCompanyRequest;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use App\Models\JobPost;
 use Request;
 
 class CompanyController extends Controller
@@ -42,7 +43,8 @@ class CompanyController extends Controller
                 $query->orderBy('id', 'desc');
             }
         ]);
-        return view('companies.admin-show', compact('company'));
+        $positionTypes = JobPost::POSITION_TYPES;
+        return view('companies.admin-show', compact('company', 'positionTypes'));
     }
 
     /**

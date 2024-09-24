@@ -28,11 +28,20 @@ class JobPostController extends Controller
     public function store(StoreJobPostRequest $request)
     {
         JobPost::create($request->only(['company_id', 'title', 'location', 'position_type', 'salary', 'description']));
+
+        $redirectTo = $request->input('redirect_to');
+        $toasMessage = [
+            'message' => 'Job Posting created successfully!',
+            'type' => 'success',
+        ];
+
+        if ($redirectTo) {
+            return redirect($redirectTo)
+                ->with('toast', $toasMessage);
+        }
+
         return redirect()->route('admin.job-posts.index')
-            ->with('toast', [
-                'message' => 'Job Posting created successfully!',
-                'type' => 'success',
-            ]);
+            ->with('toast', $toasMessage);
     }
 
     /**
