@@ -27,6 +27,17 @@
                     <div class="whitespace-pre-wrap">{{ $jobPost->description }}</div>
                 </div>
             </div>
+
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg p-6">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('About ' . $jobPost->company->name) }}
+                </h3>
+                <div class="dark:text-gray-200 flex flex-col gap-4">
+                    <p><strong class="dark:text-gray-500">{{ __('Headquarters:') }}</strong>
+                        {{ empty($jobPost->company->location) ? $jobPost->company->location : 'Not specified' }}</p>
+                    <div class="whitespace-pre-wrap">{{ $jobPost->company->description }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>
