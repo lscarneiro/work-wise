@@ -25,8 +25,20 @@
         @isset($header)
             <header class="bg-white dark:bg-gray-800 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                    <div class="flex justify-around">
+                        <div class="flex-1">
+                            {{ $header }}
+                        </div>
+                        <div class="my-1 text-right max-md:hidden">
+                            <a class="text-gray-600 dark:text-gray-400" @click="darkMode = !darkMode"
+                                :href="'javascript:void(0)'">
+                                <span x-show="darkMode">{{ __('Try Light mode!') }}</span>
+                                <span x-show="!darkMode">{{ __('Try Dark mode!') }}</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
             </header>
         @endisset
 
