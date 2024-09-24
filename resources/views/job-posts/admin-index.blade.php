@@ -63,7 +63,7 @@
                                         class="px-1 sm:px-6 py-4 whitespace-nowrap sm:max-w-48 overflow-hidden truncate max-sm:hidden">
                                         {{ $jobPost->location }}</td>
                                     <td class="px-1 sm:px-6 py-4 whitespace-nowrap max-sm:hidden">
-                                        {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</td>
+                                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</td>
                                     <td class="px-1 sm:px-6 py-4 text-center whitespace-nowrap">
                                         <a class="hover:text-indigo-900"
                                             href="{{ route('admin.job-posts.show', $jobPost->id) }}">{{ __('View / Edit') }}</a>
