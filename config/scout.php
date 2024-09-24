@@ -161,9 +161,7 @@ return [
                 // **Sortable Attributes**
                 // Allows sorting the search results based on these attributes.
                 'sortableAttributes' => [
-                    'created_at',
-                    'salary',
-                    'title',
+                    'id',
                 ],
             ],
           
