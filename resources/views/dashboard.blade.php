@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="infiniteScroll()" x-init="init()">
             <!-- Filter Form -->
             <form method="GET" action="{{ route('dashboard') }}"
                 class="mb-6 p-6 bg-white dark:bg-gray-800 shadow rounded-lg">
@@ -50,7 +50,6 @@
                         </select>
                     </div>
 
-
                     <div class="flex justify-end items-end">
                         <x-primary-button type="submit" class="px-4 py-2">
                             {{ __('Search') }}
@@ -64,33 +63,95 @@
             </form>
 
             <!-- Job Posts List -->
-            <div class="grid grid-cols-1 md:grid-cols-2  gap-6">
-                @forelse ($jobPosts as $jobPost)
-                    <a href="{{ route('job-posts.details', $jobPost) }}" class="block">
-                        <div
-                            class="bg-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg transition-colors duration-200">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                    {{ $jobPost->title }}</h3>
-                                <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $jobPost->company->name }}</p>
-                                <p class="mt-1 text-gray-600 dark:text-gray-400">{{ $jobPost->location }}</p>
-                                <p class="mt-1 text-gray-600 dark:text-gray-400">
-                                    {{ $jobPost->salary ? '$ ' . $jobPost->salary : '' }}</p>
-                                <p class="mt-1 text-gray-600 dark:text-gray-400">
-                                    {{ $positionTypes[$jobPost->position_type] }}</p>
-
-                            </div>
-                        </div>
-                    </a>
-                @empty
-                    <p class="text-center text-gray-500 dark:text-gray-400">No job posts found.</p>
-                @endforelse
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="job-posts-container">
+                @include('partials.job-posts-list')
             </div>
 
-            <!-- Pagination -->
-            <div class="mt-6">
-                {{ $jobPosts->links() }}
+            <!-- Infinite Scroll marker -->
+            <div x-ref="endOfPageMarker" class="h-1"></div>
+
+            <!-- Loading Indicator -->
+            <div class="flex justify-center my-6" x-show="loading">
+                <svg class="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                    </circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z">
+                    </path>
+                </svg>
             </div>
+
+            <!-- No More Data Indicator -->
+            <div class="text-center text-gray-500 dark:text-gray-400 my-6" x-show="noMoreData">
+                {{ __('No more job postings to load.') }}
+            </div>
+
         </div>
     </div>
+
+    <!-- AlpineJS Component for Infinite Scroll -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('infiniteScroll', () => ({
+                page: 1,
+                loading: false,
+                noMoreData: false,
+                observer: null,
+
+                init() {
+                    this.setupObserver();
+                },
+
+                setupObserver() {
+                    const options = {
+                        root: null,
+                        rootMargin: '0px',
+                        threshold: 1.0
+                    };
+
+                    this.observer = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting) {
+                            this.loadMore();
+                        }
+                    }, options);
+
+                    this.observer.observe(this.$refs.endOfPageMarker);
+                },
+
+                loadMore() {
+                    if (this.loading || this.noMoreData) return;
+
+                    this.loading = true;
+                    this.page += 1;
+
+                    const queryParams = new URLSearchParams(window.location.search);
+                    queryParams.set('page', this.page);
+
+                    axios.get("{{ route('dashboard') }}" + '?' + queryParams.toString(), {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(response => {
+                            if (response.data.trim() === '') {
+                                this.noMoreData = true;
+                                this.observer.disconnect();
+                            } else {
+                                const container = document.getElementById('job-posts-container');
+                                container.insertAdjacentHTML('beforeend', response.data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error loading more job postings:', error);
+                            this.noMoreData = true;
+                            this.observer.disconnect();
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                }
+            }))
+        });
+    </script>
 </x-app-layout>

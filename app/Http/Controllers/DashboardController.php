@@ -10,11 +10,20 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        $validated = $request->validate([
+            'query' => 'nullable|string|max:255',
+            'salary_min' => 'nullable|numeric|min:0',
+            'salary_max' => 'nullable|numeric|min:0',
+            'position_type' => 'nullable|in:remote,hybrid,in-person',
+            'page' => 'nullable|integer|min:1',
+        ]);
+
         // Retrieve filter inputs
-        $query = $request->input('query', '');
-        $salaryMin = $request->input('salary_min', null);
-        $salaryMax = $request->input('salary_max', null);
-        $positionType = $request->input('position_type', '');
+        $query = $validated['query'] ?? '';
+        $salaryMin = $validated['salary_min'] ?? null;
+        $salaryMax = $validated['salary_max'] ?? null;
+        $positionType = $validated['position_type'] ?? '';
+        $page = $validated['page'] ?? 1;
 
         // Build filter string for Meilisearch
         $filters = ['is_published = true'];
@@ -34,10 +43,10 @@ class DashboardController extends Controller
         $filterString = implode(' AND ', $filters);
 
         // Perform search with Scout and Meilisearch
-        $jobPosts = JobPost::search($query, function ($meilisearch, $query, $options) use ($filterString) {
+        $jobPosts = JobPost::search($query, function ($meilisearch, $query, $options) use ($filterString, $page) {
             $options['filter'] = $filterString;
-            $options['limit'] = 10;
-            $options['offset'] = ($options['page'] - 1) * $options['limit'];
+            $options['limit'] = 4;
+            $options['offset'] = ($page - 1) * $options['limit'];
             return $meilisearch->search($query, $options);
         })
             ->orderBy('created_at', 'desc')
@@ -46,6 +55,15 @@ class DashboardController extends Controller
 
         // Retrieve necessary data for filters
         $positionTypes = JobPost::POSITION_TYPES;
+
+        if ($request->ajax()) {
+            // Return a partial view with job posts
+            if ($jobPosts->count() > 0) {
+                return view('partials.job-posts-list', compact('jobPosts', 'positionTypes'))->render();
+            } else {
+                return ''; // No more data to load
+            }
+        }
 
         return view('dashboard', compact(
             'jobPosts',
