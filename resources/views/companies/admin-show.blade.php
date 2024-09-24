@@ -135,7 +135,7 @@
                 <x-input-label for="description" value="{{ __('Description') }}" />
                 <x-textarea-input id="description" name="description" rows="5"
                     placeholder="{{ __('Enter company profile...') }}" class="mt-1 block w-full">
-                    {{ old('description', $jobPost->description) }}
+                    {{ old('description', $company->description) }}
                 </x-textarea-input>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
 
