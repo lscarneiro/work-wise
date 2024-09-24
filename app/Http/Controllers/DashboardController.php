@@ -40,6 +40,7 @@ class DashboardController extends Controller
             $options['offset'] = ($options['page'] - 1) * $options['limit'];
             return $meilisearch->search($query, $options);
         })
+            ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
 
