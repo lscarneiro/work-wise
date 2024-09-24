@@ -5,9 +5,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="mt-6 flex justify-center sm:justify-end gap-2 sm:gap-4">
+            <div class="flex flex-row justify-center sm:justify-end gap-2 sm:gap-4">
                 @if ($jobPost->is_published)
                     <x-secondary-button
                         x-on:click.prevent="$dispatch('open-modal', 'unpublish-job-post-{{ $jobPost->id }}')">
