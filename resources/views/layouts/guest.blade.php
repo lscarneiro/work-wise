@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-init="$watch('darkMode', value => localStorage.setItem('darkMode', value))" :class="{ 'dark': darkMode }"
+<html x-cloak  x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-init="$watch('darkMode', value => localStorage.setItem('darkMode', value))" :class="{ 'dark': darkMode }"
     lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
