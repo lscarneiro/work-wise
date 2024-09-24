@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Str;
 
 class JobPost extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     public const POSITION_TYPES = [
         'remote' => 'Remote',
@@ -25,12 +26,28 @@ class JobPost extends Model
 
     protected $casts = [
         'company_id' => 'integer',
-        'salary' => 'decimal:2',
+        'salary' => 'float',
         'is_published' => 'boolean',
     ];
 
     public function getTruncatedDescriptionAttribute()
     {
         return Str::limit($this->description, 100, '...');
+    }
+
+    public function searchableAs(): string
+    {
+        return 'job_posts_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['company_name'] = $this->company->name;
+
+        $array['salary'] = (float) $this->salary;
+
+        return $array;
     }
 }

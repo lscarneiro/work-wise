@@ -36,10 +36,10 @@ class DatabaseSeeder extends Seeder
         }
 
         Company::factory()
-            ->count(15)
+            ->count(30)
             ->create()->each(function ($company) {
                 $company->jobPosts()->saveMany(
-                    JobPost::factory()->count(rand(0, 10))->make()
+                    JobPost::factory()->count(rand(0, 50))->make()
                 );
             });
         ;
