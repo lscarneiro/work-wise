@@ -43,14 +43,14 @@
                     <p><strong class="dark:text-gray-500">{{ __('Position Type:') }}</strong>
                         {{ $positionTypes[$jobPost->position_type] }}
                     </p>
-                    <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ $jobPost->location }}</p>
+                    <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ empty($jobPost->location) ? $jobPost->location : 'Not specified' }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Salary:') }}</strong>
-                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</p>
+                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : 'Not specified' }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Published:') }}</strong> <span
                             class="font-bold {{ $jobPost->is_published ? 'text-green-600' : 'text-red-600' }}">{{ $jobPost->is_published ? 'YES' : 'NO' }}</span>
                     </p>
-                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong>
-                        {{ $jobPost->description }}</p>
+                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong></p>
+                    <div class="whitespace-pre-wrap">{{ $jobPost->description }}</div>
                 </div>
             </div>
 
@@ -101,8 +101,10 @@
 
             <div class="mt-6">
                 <x-input-label for="description" value="{{ __('Description') }}" />
-                <x-text-input id="description" name="description" type="text" :value="old('description', $jobPost->description)"
-                    class="mt-1 block w-full" />
+                <x-textarea-input id="description" name="description" rows="5"
+                    placeholder="Enter job description..." class="mt-1 block w-full">
+                    {{ old('description', $jobPost->description) }}
+                </x-textarea-input>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 

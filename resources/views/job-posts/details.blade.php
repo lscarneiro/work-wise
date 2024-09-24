@@ -19,11 +19,12 @@
                     <p><strong class="dark:text-gray-500">{{ __('Position Type:') }}</strong>
                         {{ $positionTypes[$jobPost->position_type] }}
                     </p>
-                    <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ $jobPost->location }}</p>
+                    <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong>
+                        {{ empty($jobPost->location) ? $jobPost->location : 'Not specified' }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Salary:') }}</strong>
-                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : '' }}</p>
-                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong>
-                        {{ $jobPost->description }}</p>
+                        {{ $jobPost->salary ? '$ ' . number_format($jobPost->salary, 2) : 'Not specified' }}</p>
+                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong></p>
+                    <div class="whitespace-pre-wrap">{{ $jobPost->description }}</div>
                 </div>
             </div>
         </div>

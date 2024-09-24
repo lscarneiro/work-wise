@@ -20,8 +20,8 @@
                 <div class="mt-4 dark:text-gray-200 flex flex-col gap-4">
                     <p><strong class="dark:text-gray-500">{{ __('Name:') }}</strong> {{ $company->name }}</p>
                     <p><strong class="dark:text-gray-500">{{ __('Location:') }}</strong> {{ $company->location }}</p>
-                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong> {{ $company->description }}
-                    </p>
+                    <p><strong class="dark:text-gray-500">{{ __('Description:') }}</strong></p>
+                    <div class="whitespace-pre-wrap">{{ $company->description }}</div>
                 </div>
             </div>
 
