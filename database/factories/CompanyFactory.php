@@ -19,7 +19,7 @@ class CompanyFactory extends Factory
         return [
             "name" => $this->faker->company,
             "location" => $this->faker->city . ", " . $this->faker->country,
-            "description" => $this->faker->sentences(3, true),
+            "description" => implode("\n\n", $this->faker->paragraphs(4)),
         ];
     }
 }
